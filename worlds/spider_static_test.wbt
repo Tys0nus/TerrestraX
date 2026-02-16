@@ -1,0 +1,52 @@
+#VRML_SIM R2023b utf8
+
+EXTERNPROTO "../protos/SpiderRobotStatic.proto"
+
+WorldInfo {
+  info [
+    "Spider Robot Static Test World"
+    "No physics - for testing linkage geometry"
+  ]
+  title "Spider Robot Static Testing"
+  basicTimeStep 32
+}
+
+Viewpoint {
+  orientation -0.3 0.9 0.3 1.2
+  position 0.4 0.3 0.4
+}
+
+Background {
+  skyColor [
+    0.4 0.7 1.0
+  ]
+}
+
+DirectionalLight {
+  ambientIntensity 1
+  direction 0.1 -0.5 0.3
+}
+
+DEF FLOOR Solid {
+  children [
+    Shape {
+      appearance Appearance {
+        material Material {
+          diffuseColor 0.8 0.8 0.8
+        }
+      }
+      geometry Plane {
+        size 2 2
+      }
+    }
+  ]
+  name "floor"
+  boundingObject Plane {
+    size 2 2
+  }
+}
+
+SpiderRobotStatic {
+  translation 0 0.1 0
+  rotation 0 1 0 0
+}

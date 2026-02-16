@@ -1,0 +1,518 @@
+#VRML_SIM R2023b utf8
+PROTO SpiderRobotStatic [
+  field SFVec3f    translation     0 0.05 0
+  field SFRotation rotation        0 0 1 0
+  field SFColor    bodyColor       0.3 0.3 0.3
+  field SFColor    legColor        0.2 0.2 0.2
+  field SFVec3f    bodySize        0.12 0.04 0.08
+  field SFFloat    coxaLength      0.04
+  field SFFloat    femurLength     0.06
+  field SFFloat    tibiaLength     0.08
+  field SFFloat    legRadius       0.015
+]
+{
+  Robot {
+    translation IS translation
+    rotation IS rotation
+    children [
+      # Main body
+      DEF BODY Solid {
+        children [
+          Shape {
+            appearance Appearance {
+              material Material {
+                diffuseColor IS bodyColor
+              }
+            }
+            geometry Box {
+              size IS bodySize
+            }
+          }
+        ]
+        name "body"
+        boundingObject Box {
+          size IS bodySize
+        }
+        # NO PHYSICS - Static for testing
+      }
+      
+      # Front Left Leg (Leg 0)
+      HingeJoint {
+        jointParameters HingeJointParameters {
+          position 0
+          axis 0 1 0
+          anchor 0.06 0 0.04
+        }
+        device [
+          RotationalMotor {
+            name "coxa_motor_0"
+            maxTorque 2.0
+          }
+          PositionSensor {
+            name "coxa_sensor_0"
+          }
+        ]
+        endPoint Solid {
+          translation 0.06 0 0.04
+          rotation 0 0 1 1.5708
+          children [
+            Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor IS legColor
+                }
+              }
+              geometry Cylinder {
+                height IS coxaLength
+                radius IS legRadius
+              }
+            }
+            HingeJoint {
+              jointParameters HingeJointParameters {
+                position 0
+                axis 1 0 0
+                anchor 0.02 0 0
+              }
+              device [
+                RotationalMotor {
+                  name "femur_motor_0"
+                  maxTorque 2.0
+                }
+                PositionSensor {
+                  name "femur_sensor_0"
+                }
+              ]
+              endPoint Solid {
+                translation 0.02 0 0
+                rotation 0 0 1 1.5708
+                children [
+                  Shape {
+                    appearance Appearance {
+                      material Material {
+                        diffuseColor IS legColor
+                      }
+                    }
+                    geometry Cylinder {
+                      height IS femurLength
+                      radius IS legRadius
+                    }
+                  }
+                  HingeJoint {
+                    jointParameters HingeJointParameters {
+                      position 0
+                      axis 1 0 0
+                      anchor 0.03 0 0
+                    }
+                    device [
+                      RotationalMotor {
+                        name "tibia_motor_0"
+                        maxTorque 2.0
+                      }
+                      PositionSensor {
+                        name "tibia_sensor_0"
+                      }
+                    ]
+                    endPoint Solid {
+                      translation 0.03 0 0
+                      rotation 0 0 1 1.5708
+                      children [
+                        Shape {
+                          appearance Appearance {
+                            material Material {
+                              diffuseColor IS legColor
+                            }
+                          }
+                          geometry Cylinder {
+                            height IS tibiaLength
+                            radius IS legRadius
+                          }
+                        }
+                      ]
+                      name "tibia_0"
+                      boundingObject Cylinder {
+                        height IS tibiaLength
+                        radius IS legRadius
+                      }
+                      # NO PHYSICS - Static for testing
+                    }
+                  }
+                ]
+                name "femur_0"
+                boundingObject Cylinder {
+                  height IS femurLength
+                  radius IS legRadius
+                }
+                # NO PHYSICS - Static for testing
+              }
+            }
+          ]
+          name "coxa_0"
+          boundingObject Cylinder {
+            height IS coxaLength
+            radius IS legRadius
+          }
+          # NO PHYSICS - Static for testing
+        }
+      }
+      
+      # Front Right Leg (Leg 1)
+      HingeJoint {
+        jointParameters HingeJointParameters {
+          position 0
+          axis 0 1 0
+          anchor 0.06 0 -0.04
+        }
+        device [
+          RotationalMotor {
+            name "coxa_motor_1"
+            maxTorque 2.0
+          }
+          PositionSensor {
+            name "coxa_sensor_1"
+          }
+        ]
+        endPoint Solid {
+          translation 0.06 0 -0.04
+          rotation 0 0 1 1.5708
+          children [
+            Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor IS legColor
+                }
+              }
+              geometry Cylinder {
+                height IS coxaLength
+                radius IS legRadius
+              }
+            }
+            HingeJoint {
+              jointParameters HingeJointParameters {
+                position 0
+                axis 1 0 0
+                anchor 0.02 0 0
+              }
+              device [
+                RotationalMotor {
+                  name "femur_motor_1"
+                  maxTorque 2.0
+                }
+                PositionSensor {
+                  name "femur_sensor_1"
+                }
+              ]
+              endPoint Solid {
+                translation 0.02 0 0
+                rotation 0 0 1 1.5708
+                children [
+                  Shape {
+                    appearance Appearance {
+                      material Material {
+                        diffuseColor IS legColor
+                      }
+                    }
+                    geometry Cylinder {
+                      height IS femurLength
+                      radius IS legRadius
+                    }
+                  }
+                  HingeJoint {
+                    jointParameters HingeJointParameters {
+                      position 0
+                      axis 1 0 0
+                      anchor 0.03 0 0
+                    }
+                    device [
+                      RotationalMotor {
+                        name "tibia_motor_1"
+                        maxTorque 2.0
+                      }
+                      PositionSensor {
+                        name "tibia_sensor_1"
+                      }
+                    ]
+                    endPoint Solid {
+                      translation 0.03 0 0
+                      rotation 0 0 1 1.5708
+                      children [
+                        Shape {
+                          appearance Appearance {
+                            material Material {
+                              diffuseColor IS legColor
+                            }
+                          }
+                          geometry Cylinder {
+                            height IS tibiaLength
+                            radius IS legRadius
+                          }
+                        }
+                      ]
+                      name "tibia_1"
+                      boundingObject Cylinder {
+                        height IS tibiaLength
+                        radius IS legRadius
+                      }
+                      # NO PHYSICS - Static for testing
+                    }
+                  }
+                ]
+                name "femur_1"
+                boundingObject Cylinder {
+                  height IS femurLength
+                  radius IS legRadius
+                }
+                # NO PHYSICS - Static for testing
+              }
+            }
+          ]
+          name "coxa_1"
+          boundingObject Cylinder {
+            height IS coxaLength
+            radius IS legRadius
+          }
+          # NO PHYSICS - Static for testing
+        }
+      }
+      
+      # Rear Left Leg (Leg 2)
+      HingeJoint {
+        jointParameters HingeJointParameters {
+          position 0
+          axis 0 1 0
+          anchor -0.06 0 0.04
+        }
+        device [
+          RotationalMotor {
+            name "coxa_motor_2"
+            maxTorque 2.0
+          }
+          PositionSensor {
+            name "coxa_sensor_2"
+          }
+        ]
+        endPoint Solid {
+          translation -0.06 0 0.04
+          rotation 0 0 1 -1.5708
+          children [
+            Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor IS legColor
+                }
+              }
+              geometry Cylinder {
+                height IS coxaLength
+                radius IS legRadius
+              }
+            }
+            HingeJoint {
+              jointParameters HingeJointParameters {
+                position 0
+                axis 1 0 0
+                anchor -0.02 0 0
+              }
+              device [
+                RotationalMotor {
+                  name "femur_motor_2"
+                  maxTorque 2.0
+                }
+                PositionSensor {
+                  name "femur_sensor_2"
+                }
+              ]
+              endPoint Solid {
+                translation -0.02 0 0
+                rotation 0 0 1 -1.5708
+                children [
+                  Shape {
+                    appearance Appearance {
+                      material Material {
+                        diffuseColor IS legColor
+                      }
+                    }
+                    geometry Cylinder {
+                      height IS femurLength
+                      radius IS legRadius
+                    }
+                  }
+                  HingeJoint {
+                    jointParameters HingeJointParameters {
+                      position 0
+                      axis 1 0 0
+                      anchor -0.03 0 0
+                    }
+                    device [
+                      RotationalMotor {
+                        name "tibia_motor_2"
+                        maxTorque 2.0
+                      }
+                      PositionSensor {
+                        name "tibia_sensor_2"
+                      }
+                    ]
+                    endPoint Solid {
+                      translation -0.03 0 0
+                      rotation 0 0 1 -1.5708
+                      children [
+                        Shape {
+                          appearance Appearance {
+                            material Material {
+                              diffuseColor IS legColor
+                            }
+                          }
+                          geometry Cylinder {
+                            height IS tibiaLength
+                            radius IS legRadius
+                          }
+                        }
+                      ]
+                      name "tibia_2"
+                      boundingObject Cylinder {
+                        height IS tibiaLength
+                        radius IS legRadius
+                      }
+                      # NO PHYSICS - Static for testing
+                    }
+                  }
+                ]
+                name "femur_2"
+                boundingObject Cylinder {
+                  height IS femurLength
+                  radius IS legRadius
+                }
+                # NO PHYSICS - Static for testing
+              }
+            }
+          ]
+          name "coxa_2"
+          boundingObject Cylinder {
+            height IS coxaLength
+            radius IS legRadius
+          }
+          # NO PHYSICS - Static for testing
+        }
+      }
+      
+      # Rear Right Leg (Leg 3)
+      HingeJoint {
+        jointParameters HingeJointParameters {
+          position 0
+          axis 0 1 0
+          anchor -0.06 0 -0.04
+        }
+        device [
+          RotationalMotor {
+            name "coxa_motor_3"
+            maxTorque 2.0
+          }
+          PositionSensor {
+            name "coxa_sensor_3"
+          }
+        ]
+        endPoint Solid {
+          translation -0.06 0 -0.04
+          rotation 0 0 1 -1.5708
+          children [
+            Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor IS legColor
+                }
+              }
+              geometry Cylinder {
+                height IS coxaLength
+                radius IS legRadius
+              }
+            }
+            HingeJoint {
+              jointParameters HingeJointParameters {
+                position 0
+                axis 1 0 0
+                anchor -0.02 0 0
+              }
+              device [
+                RotationalMotor {
+                  name "femur_motor_3"
+                  maxTorque 2.0
+                }
+                PositionSensor {
+                  name "femur_sensor_3"
+                }
+              ]
+              endPoint Solid {
+                translation -0.02 0 0
+                rotation 0 0 1 -1.5708
+                children [
+                  Shape {
+                    appearance Appearance {
+                      material Material {
+                        diffuseColor IS legColor
+                      }
+                    }
+                    geometry Cylinder {
+                      height IS femurLength
+                      radius IS legRadius
+                    }
+                  }
+                  HingeJoint {
+                    jointParameters HingeJointParameters {
+                      position 0
+                      axis 1 0 0
+                      anchor -0.03 0 0
+                    }
+                    device [
+                      RotationalMotor {
+                        name "tibia_motor_3"
+                        maxTorque 2.0
+                      }
+                      PositionSensor {
+                        name "tibia_sensor_3"
+                      }
+                    ]
+                    endPoint Solid {
+                      translation -0.03 0 0
+                      rotation 0 0 1 -1.5708
+                      children [
+                        Shape {
+                          appearance Appearance {
+                            material Material {
+                              diffuseColor IS legColor
+                            }
+                          }
+                          geometry Cylinder {
+                            height IS tibiaLength
+                            radius IS legRadius
+                          }
+                        }
+                      ]
+                      name "tibia_3"
+                      boundingObject Cylinder {
+                        height IS tibiaLength
+                        radius IS legRadius
+                      }
+                      # NO PHYSICS - Static for testing
+                    }
+                  }
+                ]
+                name "femur_3"
+                boundingObject Cylinder {
+                  height IS femurLength
+                  radius IS legRadius
+                }
+                # NO PHYSICS - Static for testing
+              }
+            }
+          ]
+          name "coxa_3"
+          boundingObject Cylinder {
+            height IS coxaLength
+            radius IS legRadius
+          }
+          # NO PHYSICS - Static for testing
+        }
+      }
+    ]
+    name "SpiderRobotStatic"
+    controller "spider_static"
+  }
+}

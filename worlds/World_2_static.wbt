@@ -1,0 +1,169 @@
+#VRML_SIM R2025a utf8
+
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/backgrounds/protos/TexturedBackground.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/floors/protos/RectangleArena.proto"
+
+WorldInfo {
+}
+Viewpoint {
+  orientation 0.24747106044447012 0.002015262305996038 -0.9688931896552517 3.3179645202875583
+  position 12.317189086155281 -1.4786326465515593 7.581817128036063
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+RectangleArena {
+  floorSize 5 5
+}
+Robot {
+  translation 0 0 0.9
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 1 0 1
+        metalness 0
+      }
+      geometry Box {
+        size 1.2 1.2 0.1
+      }
+    }
+    Connector {
+      locked TRUE
+    }
+    Pose {
+      translation 0.6 0.6 0
+      rotation 0 0 1 0.785
+      children [
+        HingeJoint {
+          jointParameters HingeJointParameters {
+            axis 0 0 1
+          }
+          device [
+            RotationalMotor {
+              name "coxa_motor"
+            }
+          ]
+          endPoint Solid {
+            rotation 1 0 0 1.5699996938995748
+            children [
+              Pose {
+                translation 0.2 0 0
+                rotation 0 1 0 1.57
+                children [
+                  Shape {
+                    appearance PBRAppearance {
+                      baseColor 1 0 0
+                      metalness 0
+                    }
+                    geometry Cylinder {
+                      height 0.4
+                      radius 0.05
+                    }
+                  }
+                ]
+              }
+              Pose {
+                translation 0.4 0 0
+                rotation 0 0 1 -0.785
+                children [
+                  HingeJoint {
+                    jointParameters HingeJointParameters {
+                      axis 0 0 1
+                    }
+                    device [
+                      RotationalMotor {
+                        name "femur_motor"
+                      }
+                    ]
+                    endPoint Solid {
+                      children [
+                        Pose {
+                          translation 0.175 0 0
+                          rotation 0 1 0 1.57
+                          children [
+                            Shape {
+                              appearance PBRAppearance {
+                                baseColor 0 1 0
+                                metalness 0
+                              }
+                              geometry Cylinder {
+                                height 0.35
+                                radius 0.05
+                              }
+                            }
+                          ]
+                        }
+                        Pose {
+                          translation 0.35 0 0
+                          rotation 0 0 1 -0.785
+                          children [
+                            HingeJoint {
+                              jointParameters HingeJointParameters {
+                                position -2.0816681711721685e-17
+                                axis 0 0 1
+                              }
+                              device [
+                                RotationalMotor {
+                                  name "tibia_motor"
+                                }
+                              ]
+                              endPoint Solid {
+                                children [
+                                  Pose {
+                                    translation 0.35 0 0
+                                    rotation 0 1 0 1.57
+                                    children [
+                                      Shape {
+                                        appearance PBRAppearance {
+                                          baseColor 0 0 1
+                                          metalness 0
+                                        }
+                                        geometry Cylinder {
+                                          height 0.7
+                                          radius 0.05
+                                        }
+                                      }
+                                    ]
+                                  }
+                                  Pose {
+                                    translation 0.7 0 0
+                                    rotation 0 0 1 1.57
+                                    children [
+                                      Pose {
+                                        rotation 1 0 0 -1.57
+                                        children [
+                                          Pose {
+                                            rotation 0 0 1 -0.785
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                                name "tibia_link"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                      name "femur_link"
+                    }
+                  }
+                ]
+              }
+            ]
+            name "coxa_link"
+          }
+        }
+      ]
+    }
+    Display {
+      name "hud"
+      width 600
+      height 180
+    }
+  ]
+  controller "spider_static_controller"
+}

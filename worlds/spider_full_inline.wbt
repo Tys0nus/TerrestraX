@@ -1,0 +1,457 @@
+#VRML_SIM R2023b utf8
+
+WorldInfo {
+  info [
+    "Full Spider Robot Test - Inline Definition"
+  ]
+  title "Spider Full Test"
+  basicTimeStep 32
+}
+
+Viewpoint {
+  orientation -0.3 0.9 0.3 1.2
+  position 0.4 0.3 0.4
+}
+
+Background {
+  skyColor [
+    0.4 0.7 1.0
+  ]
+}
+
+DirectionalLight {
+  ambientIntensity 1
+  direction 0.1 -0.5 0.3
+}
+
+DEF FLOOR Solid {
+  children [
+    Shape {
+      appearance Appearance {
+        material Material {
+          diffuseColor 0.8 0.8 0.8
+        }
+      }
+      geometry Plane {
+        size 2 2
+      }
+    }
+  ]
+  name "floor"
+  boundingObject Plane {
+    size 2 2
+  }
+}
+
+# Full spider robot without PROTO (inline definition)
+Robot {
+  translation 0 0.1 0
+  children [
+    # Body
+    Solid {
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              diffuseColor 0.3 0.3 0.3
+            }
+          }
+          geometry Box {
+            size 0.12 0.04 0.08
+          }
+        }
+      ]
+      name "body"
+    }
+    
+    # Front Left Leg (Leg 0)
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position 0
+        axis 0 1 0
+        anchor 0.06 0 0.04
+      }
+      device [
+        RotationalMotor {
+          name "coxa_motor_0"
+          maxTorque 2.0
+        }
+        PositionSensor {
+          name "coxa_sensor_0"
+        }
+      ]
+      endPoint Solid {
+        translation 0.06 0 0.04
+        rotation 0 0 1 1.5708
+        children [
+          Shape {
+            appearance Appearance {
+              material Material {
+                diffuseColor 0.8 0.2 0.2
+              }
+            }
+            geometry Cylinder {
+              height 0.04
+              radius 0.015
+            }
+          }
+          HingeJoint {
+            jointParameters HingeJointParameters {
+              position 0
+              axis 1 0 0
+              anchor 0.02 0 0
+            }
+            device [
+              RotationalMotor {
+                name "femur_motor_0"
+                maxTorque 2.0
+              }
+              PositionSensor {
+                name "femur_sensor_0"
+              }
+            ]
+            endPoint Solid {
+              translation 0.02 0 0
+              rotation 0 0 1 1.5708
+              children [
+                Shape {
+                  appearance Appearance {
+                    material Material {
+                      diffuseColor 0.2 0.8 0.2
+                    }
+                  }
+                  geometry Cylinder {
+                    height 0.06
+                    radius 0.015
+                  }
+                }
+                HingeJoint {
+                  jointParameters HingeJointParameters {
+                    position 0
+                    axis 1 0 0
+                    anchor 0.03 0 0
+                  }
+                  device [
+                    RotationalMotor {
+                      name "tibia_motor_0"
+                      maxTorque 2.0
+                    }
+                    PositionSensor {
+                      name "tibia_sensor_0"
+                    }
+                  ]
+                  endPoint Solid {
+                    translation 0.03 0 0
+                    rotation 0 0 1 1.5708
+                    children [
+                      Shape {
+                        appearance Appearance {
+                          material Material {
+                            diffuseColor 0.2 0.2 0.8
+                          }
+                        }
+                        geometry Cylinder {
+                          height 0.08
+                          radius 0.015
+                        }
+                      }
+                    ]
+                    name "tibia_0"
+                  }
+                }
+              ]
+              name "femur_0"
+            }
+          }
+        ]
+        name "coxa_0"
+      }
+    }
+    
+    # Front Right Leg (Leg 1) - simplified for testing
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position 0
+        axis 0 1 0
+        anchor 0.06 0 -0.04
+      }
+      device [
+        RotationalMotor {
+          name "coxa_motor_1"
+          maxTorque 2.0
+        }
+      ]
+      endPoint Solid {
+        translation 0.06 0 -0.04
+        rotation 0 0 1 1.5708
+        children [
+          Shape {
+            appearance Appearance {
+              material Material {
+                diffuseColor 0.8 0.4 0.2
+              }
+            }
+            geometry Cylinder {
+              height 0.04
+              radius 0.015
+            }
+          }
+          HingeJoint {
+            jointParameters HingeJointParameters {
+              position 0
+              axis 1 0 0
+              anchor 0.02 0 0
+            }
+            device [
+              RotationalMotor {
+                name "femur_motor_1"
+                maxTorque 2.0
+              }
+            ]
+            endPoint Solid {
+              translation 0.02 0 0
+              rotation 0 0 1 1.5708
+              children [
+                Shape {
+                  appearance Appearance {
+                    material Material {
+                      diffuseColor 0.4 0.8 0.4
+                    }
+                  }
+                  geometry Cylinder {
+                    height 0.06
+                    radius 0.015
+                  }
+                }
+                HingeJoint {
+                  jointParameters HingeJointParameters {
+                    position 0
+                    axis 1 0 0
+                    anchor 0.03 0 0
+                  }
+                  device [
+                    RotationalMotor {
+                      name "tibia_motor_1"
+                      maxTorque 2.0
+                    }
+                  ]
+                  endPoint Solid {
+                    translation 0.03 0 0
+                    rotation 0 0 1 1.5708
+                    children [
+                      Shape {
+                        appearance Appearance {
+                          material Material {
+                            diffuseColor 0.4 0.4 0.8
+                          }
+                        }
+                        geometry Cylinder {
+                          height 0.08
+                          radius 0.015
+                        }
+                      }
+                    ]
+                    name "tibia_1"
+                  }
+                }
+              ]
+              name "femur_1"
+            }
+          }
+        ]
+        name "coxa_1"
+      }
+    }
+    
+    # Add basic rear legs for testing (simplified)
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position 0
+        axis 0 1 0
+        anchor -0.06 0 0.04
+      }
+      device [
+        RotationalMotor {
+          name "coxa_motor_2"
+          maxTorque 2.0
+        }
+      ]
+      endPoint Solid {
+        translation -0.06 0 0.04
+        rotation 0 0 1 -1.5708
+        children [
+          Shape {
+            appearance Appearance {
+              material Material {
+                diffuseColor 0.8 0.2 0.8
+              }
+            }
+            geometry Cylinder {
+              height 0.04
+              radius 0.015
+            }
+          }
+          HingeJoint {
+            jointParameters HingeJointParameters {
+              position 0
+              axis 1 0 0
+              anchor -0.02 0 0
+            }
+            device [
+              RotationalMotor {
+                name "femur_motor_2"
+                maxTorque 2.0
+              }
+            ]
+            endPoint Solid {
+              translation -0.02 0 0
+              rotation 0 0 1 -1.5708
+              children [
+                Shape {
+                  appearance Appearance {
+                    material Material {
+                      diffuseColor 0.8 0.8 0.2
+                    }
+                  }
+                  geometry Cylinder {
+                    height 0.06
+                    radius 0.015
+                  }
+                }
+                HingeJoint {
+                  jointParameters HingeJointParameters {
+                    position 0
+                    axis 1 0 0
+                    anchor -0.03 0 0
+                  }
+                  device [
+                    RotationalMotor {
+                      name "tibia_motor_2"
+                      maxTorque 2.0
+                    }
+                  ]
+                  endPoint Solid {
+                    translation -0.03 0 0
+                    rotation 0 0 1 -1.5708
+                    children [
+                      Shape {
+                        appearance Appearance {
+                          material Material {
+                            diffuseColor 0.2 0.8 0.8
+                          }
+                        }
+                        geometry Cylinder {
+                          height 0.08
+                          radius 0.015
+                        }
+                      }
+                    ]
+                    name "tibia_2"
+                  }
+                }
+              ]
+              name "femur_2"
+            }
+          }
+        ]
+        name "coxa_2"
+      }
+    }
+    
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position 0
+        axis 0 1 0
+        anchor -0.06 0 -0.04
+      }
+      device [
+        RotationalMotor {
+          name "coxa_motor_3"
+          maxTorque 2.0
+        }
+      ]
+      endPoint Solid {
+        translation -0.06 0 -0.04
+        rotation 0 0 1 -1.5708
+        children [
+          Shape {
+            appearance Appearance {
+              material Material {
+                diffuseColor 0.6 0.2 0.6
+              }
+            }
+            geometry Cylinder {
+              height 0.04
+              radius 0.015
+            }
+          }
+          HingeJoint {
+            jointParameters HingeJointParameters {
+              position 0
+              axis 1 0 0
+              anchor -0.02 0 0
+            }
+            device [
+              RotationalMotor {
+                name "femur_motor_3"
+                maxTorque 2.0
+              }
+            ]
+            endPoint Solid {
+              translation -0.02 0 0
+              rotation 0 0 1 -1.5708
+              children [
+                Shape {
+                  appearance Appearance {
+                    material Material {
+                      diffuseColor 0.6 0.6 0.2
+                    }
+                  }
+                  geometry Cylinder {
+                    height 0.06
+                    radius 0.015
+                  }
+                }
+                HingeJoint {
+                  jointParameters HingeJointParameters {
+                    position 0
+                    axis 1 0 0
+                    anchor -0.03 0 0
+                  }
+                  device [
+                    RotationalMotor {
+                      name "tibia_motor_3"
+                      maxTorque 2.0
+                    }
+                  ]
+                  endPoint Solid {
+                    translation -0.03 0 0
+                    rotation 0 0 1 -1.5708
+                    children [
+                      Shape {
+                        appearance Appearance {
+                          material Material {
+                            diffuseColor 0.2 0.6 0.6
+                          }
+                        }
+                        geometry Cylinder {
+                          height 0.08
+                          radius 0.015
+                        }
+                      }
+                    ]
+                    name "tibia_3"
+                  }
+                }
+              ]
+              name "femur_3"
+            }
+          }
+        ]
+        name "coxa_3"
+      }
+    }
+  ]
+  name "SpiderRobotFull"
+  controller "spider_static"
+}

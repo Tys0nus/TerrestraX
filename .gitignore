@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Notebooks
+.ipynb_checkpoints/
+
+# OS/editor files
+.DS_Store
+Thumbs.db
+.vscode/*.code-workspace
+
+# Logs and temp
+*.log
+*.tmp
+*.bak
+
+# Test/cache tooling
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# Local architecture tool artifacts
+.archex/graph.json
+.archex/metrics.json
+
+# Webots generated image artifacts
+worlds/.World_1.jpg
+worlds/.World_2_static.jpg
+worlds/.VeryNewWorld.jpg
+worlds/.spider_world.jpg
+worlds/*.wbproj
+worlds/.*.wbproj

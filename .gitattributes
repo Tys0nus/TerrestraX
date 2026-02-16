@@ -1,0 +1,4 @@
+* text=auto
+
+# Keep notebooks as JSON text for diffs/merges
+*.ipynb text
