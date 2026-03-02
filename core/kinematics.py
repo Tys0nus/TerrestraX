@@ -55,16 +55,17 @@ def chain_kin(chain: ChainParams, q: NpSym) -> Matrix:
     assert q_finder == len(q), "Joint vector length does not match number of movable joints."      
     return T
 
-def chain_footpoint(chain: ChainParams, q: NpSym) -> Vec3:
+def chain_footpoint(chain: ChainParams, q: NpSym, T0: Matrix = Matrix.eye(4)) -> Vec3:
     """Compute the end-effector position for a robotic chain."""
     
     T = chain_kin(chain, q)
+    T = T0 * T
     return T[0:3, 3]
 
-def chain_jacobian(chain: ChainParams, q: NpSym) -> Matrix:
+def chain_jacobian(chain: ChainParams, q: NpSym, T0: Matrix = Matrix.eye(4)) -> Matrix:
     """Compute the Jacobian matrix for a robotic chain."""
 
-    p_ee = chain_footpoint(chain, q)
-    J = Matrix([p_ee.diff(qi) for qi in q]).T
+    p_ee = chain_footpoint(chain, q, T0)
+    J = p_ee.jacobian(q)
     return simplify(J)
 

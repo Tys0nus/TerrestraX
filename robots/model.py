@@ -1,0 +1,1 @@
+LEG_IDS = ['FL', 'FR', 'RL', 'RR']

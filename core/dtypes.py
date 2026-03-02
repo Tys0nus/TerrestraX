@@ -25,6 +25,20 @@ class ChainParams:
     dh_params: Sequence[DHparam]  # Sequence of DH parameters for each link    
 
 @dataclass(frozen=True)
+class IKinfo:
+    ok: bool
+    iters: int
+    err: float
+
+@dataclass(frozen=True)
+class IKParams:
+    """Parameters for inverse kinematics solver."""
+    alpha: float = 0.1  # Step size for gradient descent
+    max_dq: float = 0.25  # Maximum change in joint angles per iteration
+    max_iters: int = 30  # Maximum iterations for convergence
+    tol: float = 1e-4  # Tolerance for convergence
+
+@dataclass(frozen=True)
 class ChainPose:
     """Pose of a robotic chain."""
     coxa:float
@@ -38,3 +52,13 @@ class RobotPose:
     FR: ChainPose
     RL: ChainPose
     RR: ChainPose
+
+
+### Leg trajectory types
+
+@dataclass(frozen=True)
+class Limits:
+    """Joint limits and velocity/acceleration constraints."""
+    v_max: np.ndarray  # Maximum velocity for each joint
+    a_max: np.ndarray  # Maximum acceleration for each joint
+    jerk_max: np.ndarray  # Maximum jerk for each joint

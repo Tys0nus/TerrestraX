@@ -513,6 +513,6 @@ PROTO SpiderRobotStatic [
       }
     ]
     name "SpiderRobotStatic"
-    controller "spider_static"
+    controller "spider_static_controller"
   }
 }

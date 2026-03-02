@@ -20,9 +20,22 @@ def main() -> None:
 
     joystick = WebotsJoystick(timestep)
     hud = GamepadHUD(robot)
+    tick_count = 0
+    print_every_ticks = 4
+    show_raw_inputs = True
+    print("[cmd_vel] streaming started (vx, vy, omega)")
 
     while robot.step(timestep) != -1:
+        tick_count += 1
         teleop, state = joystick.read()
+        omega = teleop.wz
+
+        if tick_count % print_every_ticks == 0:
+            print(
+                f"[cmd_vel] vx={teleop.vx:+.3f} vy={teleop.vy:+.3f} omega={omega:+.3f} estop={int(teleop.estop)}"
+            )
+            if show_raw_inputs:
+                print(f"[raw] axes={state.axes} buttons={state.buttons}")
 
         # Show LX,LY,RX,RY bars (use the axis_map indices)
         am = joystick.axis_map
@@ -33,7 +46,7 @@ def main() -> None:
         hud.update(
             axes_view,
             state.buttons,
-            title=f"vx={teleop.vx:+.2f} vy={teleop.vy:+.2f} wz={teleop.wz:+.2f}",
+            title=f"vx={teleop.vx:+.2f} vy={teleop.vy:+.2f} omega={omega:+.2f}",
         )
 
 
