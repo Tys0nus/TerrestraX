@@ -1,0 +1,110 @@
+* TerrestraX - LTspice power budget and transient model
+* Purpose: estimate battery current/power, rail sag, and runtime for 2S/3S packs.
+
+**********************
+* Simulation Controls *
+**********************
+.param CELLS=2
+.step param CELLS list 2 3
+
+.tran 0 1.2 0 200u
+
+**************
+* Battery     *
+**************
+.param VCELL_NOM=3.7
+.param VPACK={CELLS*VCELL_NOM}
+.param RBAT_2S=0.025
+.param RBAT_3S=0.018
+.param RBAT={if(CELLS==2,RBAT_2S,RBAT_3S)}
+.param CAP_AH_2S=1.5
+.param CAP_AH_3S=4.2
+.param CAP_AH={if(CELLS==2,CAP_AH_2S,CAP_AH_3S)}
+
+VPK VPACK 0 {VPACK}
+RBAT VPACK BAT {RBAT}
+
+**********************
+* Converter Settings *
+**********************
+.param EFF_SERVO=0.90
+.param EFF_LOGIC=0.92
+
+* Regulated rails with simple dropout behavior
+* Servo rail target 6V for MG90S-class operation.
+BVSERVO VSERVO 0 V={if(V(BAT)>6.4, 6.0, V(BAT)-0.4)}
+BVLOGIC VLOGIC 0 V={if(V(BAT)>5.6, 5.0, V(BAT)-0.6)}
+
+* Converter + wiring output resistance approximation
+RSERVO VSERVO VSERVO_BUS 0.030
+RLOGIC VLOGIC VLOGIC_BUS 0.060
+
+*********************
+* Rail Capacitance  *
+*********************
+.param C_SERVO_BULK=10000u
+.step param C_SERVO_BULK list 2200u 4700u 10000u 22000u
+
+CSERVO VSERVO_BUS 0 {C_SERVO_BULK}
+CLOGIC VLOGIC_BUS 0 1000u
+
+*********************
+* Dynamic Load Model*
+*********************
+.param N_SERVO=12
+.param N_STALL=3
+
+* MG90S-class current assumptions per servo
+.param I_IDLE=0.08
+.param I_MOVE=0.35
+.param I_STALL=0.90
+
+* Motion envelope and short stall bursts
+.param TMOVE=60m
+.param DMOVE=0.55
+.param TSTALL=140m
+.param DSTALL=0.06
+
+* Logic stack current (RPi + PCA9685 + peripherals)
+.param I_LOGIC_BASE=1.20
+.param I_LOGIC_SPIKE=0.45
+.param TLOGIC=180m
+.param DLOGIC=0.08
+
+.func GATE(T,P,D) if(mod(T,P)<(P*D),1,0)
+.func ISERVO(T) {N_SERVO*(I_IDLE + (I_MOVE-I_IDLE)*GATE(T,TMOVE,DMOVE)) + N_STALL*I_STALL*GATE(T,TSTALL,DSTALL)}
+.func ILOGIC(T) {I_LOGIC_BASE + I_LOGIC_SPIKE*GATE(T,TLOGIC,DLOGIC)}
+
+* Rail loads
+BLOAD_SERVO VSERVO_BUS 0 I={ISERVO(time)}
+BLOAD_LOGIC VLOGIC_BUS 0 I={ILOGIC(time)}
+
+* Battery equivalent load derived from rail power and converter efficiency
+BBAT_LOAD BAT 0 I={ (V(VSERVO_BUS)*ISERVO(time))/(EFF_SERVO*max(V(BAT),1)) + (V(VLOGIC_BUS)*ILOGIC(time))/(EFF_LOGIC*max(V(BAT),1)) }
+
+*********************
+* Measurements      *
+*********************
+.meas tran Vbat_min     MIN V(BAT)
+.meas tran Vservo_min   MIN V(VSERVO_BUS)
+.meas tran Vlogic_min   MIN V(VLOGIC_BUS)
+
+.meas tran Iservo_pk    MAX I(BLOAD_SERVO)
+.meas tran Ilogic_pk    MAX I(BLOAD_LOGIC)
+.meas tran Ibat_pk      MAX I(BBAT_LOAD)
+
+.meas tran Ibat_avg AVG I(BBAT_LOAD) from=0.2 to=1.2
+.meas tran Pbat_avg AVG (V(BAT)*I(BBAT_LOAD)) from=0.2 to=1.2
+.meas tran Pbat_pk  MAX (V(BAT)*I(BBAT_LOAD))
+
+* Runtime estimate from measured average current and nominal pack capacity
+.meas tran Runtime_h PARAM {CAP_AH/Ibat_avg}
+
+*********************
+* Helpful plots      *
+*********************
+* Plot suggestions in LTspice:
+* V(VSERVO_BUS) V(VLOGIC_BUS) V(BAT)
+* I(BLOAD_SERVO) I(BLOAD_LOGIC) I(BBAT_LOAD)
+
+.end

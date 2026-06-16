@@ -1,0 +1,17 @@
+module_id,file,ca,ce,total_coupling,lcom4,cohesion_rating,components,symbol_count
+controllers.connectors.hud,controllers/connectors/hud.py,2,0,2,10,low,10,14
+controllers.connectors.webots_joystick,controllers/connectors/webots_joystick.py,1,0,1,17,low,17,27
+controllers.gamepad_debug_controller.gamepad_debug_controller,controllers/gamepad_debug_controller/gamepad_debug_controller.py,0,4,4,2,medium,2,2
+controllers.spider_static.spider_core,controllers/spider_static/spider_core.h,0,2,2,1,high,1,1
+controllers.spider_static_controller.spider_static_controller,controllers/spider_static_controller/spider_static_controller.py,0,3,3,12,low,12,12
+controllers.spider_static_test_rev01_mk01.spider_static_test_rev01_mk01,controllers/spider_static_test_rev01_mk01/spider_static_test_rev01_mk01.py,0,1,1,4,low,4,4
+core.dtypes,core/dtypes.py,5,0,5,21,low,21,21
+core.kinematics,core/kinematics.py,0,0,0,2,medium,2,5
+core.kinematics_rev01,core/kinematics_rev01.py,0,0,0,1,high,1,3
+core.kinematics_symbolic_rev02,core/kinematics_symbolic_rev02.py,0,1,1,1,high,1,9
+core.pose,core/pose.py,0,1,1,5,low,5,5
+core.trajectory,core/trajectory.py,0,0,0,1,high,1,0
+robots.config_rev01,robots/config_rev01.py,0,1,1,1,high,1,1
+robots.config_temp,robots/config_temp.py,0,1,1,10,low,10,10
+robots.model,robots/model.py,0,0,0,1,high,1,0
+robots.rconfig,robots/rconfig.py,0,1,1,1,high,1,1

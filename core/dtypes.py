@@ -22,7 +22,7 @@ class DHparam:
 @dataclass
 class ChainParams:
     """Skeletal arm representation using DH parameters."""
-    dh_params: Sequence[DHparam]  # Sequence of DH parameters for each link    
+    dh_params: Sequence[DHparam]  # Sequence of DH paramrs for each link    
 
 @dataclass(frozen=True)
 class IKinfo:
@@ -59,6 +59,6 @@ class RobotPose:
 @dataclass(frozen=True)
 class Limits:
     """Joint limits and velocity/acceleration constraints."""
-    v_max: np.ndarray  # Maximum velocity for each joint
-    a_max: np.ndarray  # Maximum acceleration for each joint
-    jerk_max: np.ndarray  # Maximum jerk for each joint
+    v_max: np.ndarray  # Maximum vel
+    a_max: np.ndarray  # Maximum acc
+    jerk_max: np.ndarray  # Maximum jerk

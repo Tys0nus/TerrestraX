@@ -1,0 +1,6 @@
+validation_id,linked_item_id,discipline,validation_type,target_artifact,scenario_or_world,acceptance_criteria,evidence_location,status,owner,notes
+VAL-001,TTX-002,simulation,simulation,core/inverse_kinematics.py,worlds/spider_static_test.wbt,Leg target error stays within agreed tolerance,,not-started,,
+VAL-002,TTX-003,integration,simulation,robots/rconfig.py,worlds/spider_static_test.wbt,Robot reaches nominal posture without unsafe transient motion,,not-started,,
+VAL-003,TTX-004,software,code-review,core/locomotion/locomotion.py,,Path generation and time-law coupling are separated cleanly,,not-started,,
+VAL-004,TTX-005,integration,simulation,controllers/connectors/webots_joystick.py,worlds/spider_world.wbt,Raise and motion commands are recognized and routed correctly,,not-started,,
+VAL-005,TTX-006,electronics,bench-test,controllers/connectors,,Interface signals and constraints are documented and checked,,not-started,,

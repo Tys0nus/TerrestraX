@@ -1,0 +1,9 @@
+workstream_id,name,discipline,anchor_path,anchor_exists,evidence_anchor,evidence_exists,goal
+WS-ARCH,Architecture and Code Health,software,architecture.md,True,.archex/metrics.json,True,"Keep module boundaries, dependencies, and health visible and current"
+WS-IK,Kinematics and IK,software,core,True,core/inverse_kinematics.py,True,Maintain correct forward and inverse motion models for each leg
+WS-LOCO,Locomotion and Trajectories,software,core/locomotion,True,core/trajectory,True,Generate stable gait scheduling and foot target trajectories
+WS-SIM,Simulation and Validation,simulation,worlds,True,controllers,True,Validate controller behavior in repeatable Webots scenarios
+WS-MECH,Mechanical Geometry and Assembly,mechanical,SPIDER_ROBOT_CONFIG.md,True,protos,True,"Keep robot geometry, assembly, and nominal stance coherent"
+WS-ELEC,Electronics and Wiring,electronics,controllers/connectors,True,libraries,True,"Define the electronics architecture, control interfaces, and wiring behavior"
+WS-BRINGUP,Bring-up and Calibration,integration,robots/rconfig.py,True,controllers/spider_static_controller,True,Move from motor zero to safe nominal posture and calibrated operation
+WS-SUPPLY,Procurement and Manufacturing,operations,planning/templates/bom.csv,True,LTSpice experiments,True,"Track what must be built, purchased, and assembled for the next integration step"

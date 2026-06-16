@@ -1,0 +1,40 @@
+{
+  "buttons": {
+    "tuck_body": 1,
+    "teleop_toggle": 2,
+    "hold_pose": 3,
+    "estop": 10
+  },
+  "keys": {
+    "tuck_body": ["t"],
+    "teleop_toggle": ["space"],
+    "hold_pose": ["h"],
+    "estop": ["escape"]
+  },
+  "axes": {
+    "forward": {
+      "axis": "y",
+      "invert": true
+    },
+    "strafe": {
+      "axis": "x"
+    },
+    "turn": {
+      "axis": "x_rotation"
+    }
+  },
+  "keyboard_axes": {
+    "forward": {
+      "positive": ["w"],
+      "negative": ["s"]
+    },
+    "strafe": {
+      "positive": ["d"],
+      "negative": ["a"]
+    },
+    "turn": {
+      "positive": ["right"],
+      "negative": ["left"]
+    }
+  }
+}

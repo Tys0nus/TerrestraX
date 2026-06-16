@@ -1,0 +1,6 @@
+bom_id,part_name,discipline,category,qty,unit,status,source_or_vendor,linked_workstream,linked_milestone,owner,notes
+BOM-001,Spider chassis frame,mechanical,fabricated,1,assembly,unknown,,WS-MECH,M6,,
+BOM-002,Leg linkage set,mechanical,fabricated,4,set,unknown,,WS-MECH,M6,,
+BOM-003,Servo or motor set,electronics,bought,12,unit,unknown,,WS-ELEC,M6,,
+BOM-004,Motor driver or controller board,electronics,bought,1,unit,unknown,,WS-ELEC,M6,,
+BOM-005,Power supply subsystem,electronics,bought,1,assembly,unknown,,WS-ELEC,M6,,

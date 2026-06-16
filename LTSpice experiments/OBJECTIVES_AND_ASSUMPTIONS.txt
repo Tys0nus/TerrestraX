@@ -1,0 +1,57 @@
+TerrestraX LTspice Objectives and Assumptions
+============================================
+
+Goal
+----
+Build an LTspice electrical power model for the quadruped so we can estimate:
+1. Required battery power (W)
+2. Average and peak battery current (A)
+3. Servo rail voltage sag under burst/stall events
+4. Logic rail margin for Raspberry Pi + PCA9685
+5. Runtime estimates for available battery packs
+
+Known Hardware Inputs
+---------------------
+- Compute stack: Raspberry Pi + PCA9685 servo controller
+- Servos: MG90S-class (4.8V to 6V class)
+- Candidate packs:
+  - 2S LiPo, 1500mAh
+  - 3S LiPo, 4200mAh
+
+Modeling Objectives
+-------------------
+1. Validate power architecture assumptions:
+   - Battery -> high current buck -> 6V servo rail
+   - Battery -> logic buck -> 5V logic rail
+
+2. Verify transient integrity:
+   - Servo rail does not dip below 5.2V during stall bursts
+   - Logic rail does not dip below 4.75V during worst servo activity
+
+3. Quantify energy budget:
+   - Report average battery current and power
+   - Estimate runtime for each battery candidate
+
+4. Size bulk capacitance:
+   - Sweep servo bulk capacitor values to compare voltage sag
+
+Initial Assumptions (editable in netlist)
+-----------------------------------------
+- 12 servos total (4 legs x 3 joints)
+- MG90S-class current profile (per servo):
+  - Idle: 0.08A
+  - Moving average: 0.35A
+  - Short stall spike: 0.90A
+- Concurrent stall count: 3 servos
+- RPi+PCA9685 logic load base: 1.20A at 5V
+- Buck efficiencies:
+  - Servo buck: 90%
+  - Logic buck: 92%
+
+What To Tune Next
+-----------------
+- Replace current profile with measured servo current traces
+- Replace battery internal resistance with measured values at target SOC
+- Add explicit converter current limit behavior if needed
+- Add wiring resistance from battery leads and distribution harness
+- Add separate branch loads for each leg if phase offsets matter

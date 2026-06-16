@@ -1,0 +1,325 @@
+{
+  "workbook": {
+    "name": "TerrestraX_Tracker.xlsx",
+    "primary_mode": "excel",
+    "intent": "One cohesive workbook with a sequenced software build-up and manual fill sheets for mechanical, electronics, and manufacturing streams"
+  },
+  "software_sequence": [
+    {
+      "step_id": "SW-01",
+      "sequence": 1,
+      "title": "Refresh architecture baseline",
+      "objective": "Keep architecture.md and ArchEx outputs current so code structure and next steps stay grounded in reality",
+      "entry_criteria": "The repo builds enough for ArchEx to analyze it",
+      "done_criteria": "architecture.md, .archex/metrics.json, and .archex/graph.json reflect the current codebase",
+      "primary_anchor": "architecture.md",
+      "supporting_anchor": ".archex/metrics.json",
+      "validation": "ArchEx regenerate completes and outputs are reviewed",
+      "depends_on": ""
+    },
+    {
+      "step_id": "SW-02",
+      "sequence": 2,
+      "title": "Validate single-leg kinematics and IK",
+      "objective": "Prove one leg can reach commanded targets repeatably before broadening to full-body behavior",
+      "entry_criteria": "Nominal geometry and a single-leg controller scenario are available",
+      "done_criteria": "Single-leg controller hits targets within agreed tolerance in simulation",
+      "primary_anchor": "core/inverse_kinematics.py",
+      "supporting_anchor": "controllers/spider_static_controller/static_leg_common.py",
+      "validation": "Simulation run with target error acceptance bounds",
+      "depends_on": "SW-01"
+    },
+    {
+      "step_id": "SW-03",
+      "sequence": 3,
+      "title": "Implement raise-to-nominal posture",
+      "objective": "Move safely from motor zero to the working posture you want to operate from",
+      "entry_criteria": "Motor-zero and nominal posture definitions both exist",
+      "done_criteria": "Controller state machine can transition from q=[0,0,0] to nominal without unsafe transient motion",
+      "primary_anchor": "robots/rconfig.py",
+      "supporting_anchor": "controllers/spider_static_controller",
+      "validation": "Simulation scenario confirms bounded transition to nominal",
+      "depends_on": "SW-02"
+    },
+    {
+      "step_id": "SW-04",
+      "sequence": 4,
+      "title": "Separate trajectory paths from time laws",
+      "objective": "Make locomotion composable by cleanly separating spatial paths from temporal scheduling",
+      "entry_criteria": "Current locomotion update path is understood and stable enough to refactor",
+      "done_criteria": "Locomotion couples reusable path and time-law functions instead of hardcoding both inline",
+      "primary_anchor": "core/locomotion/locomotion.py",
+      "supporting_anchor": "core/trajectory",
+      "validation": "Code review plus focused simulation check of the refactored gait path",
+      "depends_on": "SW-03"
+    },
+    {
+      "step_id": "SW-05",
+      "sequence": 5,
+      "title": "Integrate full gait generation in simulation",
+      "objective": "Produce stable per-leg targets and phase behavior across the whole robot in Webots",
+      "entry_criteria": "Reusable locomotion, IK, and nominal posture pieces are available",
+      "done_criteria": "A chosen world demonstrates stable commanded stepping behavior in simulation",
+      "primary_anchor": "worlds",
+      "supporting_anchor": "core/locomotion/locomotion.py",
+      "validation": "World-specific simulation evidence for nominal stance and motion",
+      "depends_on": "SW-04"
+    },
+    {
+      "step_id": "SW-06",
+      "sequence": 6,
+      "title": "Connect operator input and motion states",
+      "objective": "Let the console or joystick trigger posture transitions and teleop motion in a controlled state machine",
+      "entry_criteria": "Input wrapper and gait controller entry points are available",
+      "done_criteria": "Operator commands can raise to nominal and then drive movement through explicit states",
+      "primary_anchor": "controllers/connectors/webots_joystick.py",
+      "supporting_anchor": "controllers",
+      "validation": "Input integration test confirms correct state transitions",
+      "depends_on": "SW-05"
+    },
+    {
+      "step_id": "SW-07",
+      "sequence": 7,
+      "title": "Prepare hardware-facing bring-up",
+      "objective": "Align the software stack with calibration, interface, and safety expectations needed for real hardware",
+      "entry_criteria": "Simulation posture and motion control are stable enough to inform hardware integration",
+      "done_criteria": "Bring-up sequence, interface assumptions, and validation gates are explicit",
+      "primary_anchor": "controllers/connectors",
+      "supporting_anchor": "robots/rconfig.py",
+      "validation": "Bring-up checklist and validation matrix are complete and reviewed",
+      "depends_on": "SW-06"
+    }
+  ],
+  "manual_streams": [
+    {
+      "stream_id": "MAN-MECH",
+      "name": "Mechanical",
+      "focus": "Geometry, CAD, assembly, tolerances, linkage fit, body packaging",
+      "prompt_1": "What is the next physical design decision that blocks software or integration?",
+      "prompt_2": "What evidence proves this mechanical step is done?",
+      "prompt_3": "Which repo or external artifact should this row point to?"
+    },
+    {
+      "stream_id": "MAN-ELEC",
+      "name": "Electronics",
+      "focus": "Power, motor interfaces, buses, wiring, controller boards, protections",
+      "prompt_1": "What interface or power constraint is currently limiting integration?",
+      "prompt_2": "What bench test or schematic evidence closes this item?",
+      "prompt_3": "Which document, diagram, or note should this row reference?"
+    },
+    {
+      "stream_id": "MAN-MFG",
+      "name": "Manufacturing and Procurement",
+      "focus": "Bought parts, fabricated parts, assembly readiness, sourcing risk",
+      "prompt_1": "Which part or fabrication step is next on the critical path?",
+      "prompt_2": "What status tells you it is no longer a blocker?",
+      "prompt_3": "What vendor, drawing, or BOM line should be linked here?"
+    }
+  ],
+  "artifacts": [
+    {
+      "artifact_id": "ARCHITECTURE",
+      "name": "Architecture Reference",
+      "discipline": "software",
+      "path": "architecture.md",
+      "kind": "file",
+      "purpose": "ArchEx-generated architecture baseline and module contracts"
+    },
+    {
+      "artifact_id": "ARCH_EX_METRICS",
+      "name": "ArchEx Metrics",
+      "discipline": "software",
+      "path": ".archex/metrics.json",
+      "kind": "file",
+      "purpose": "Module health metrics for coupling and cohesion"
+    },
+    {
+      "artifact_id": "ARCH_EX_GRAPH",
+      "name": "ArchEx Graph",
+      "discipline": "software",
+      "path": ".archex/graph.json",
+      "kind": "file",
+      "purpose": "Dependency graph for modules and symbols"
+    },
+    {
+      "artifact_id": "ROBOT_CONFIG",
+      "name": "Robot Config Guide",
+      "discipline": "mechanical",
+      "path": "SPIDER_ROBOT_CONFIG.md",
+      "kind": "file",
+      "purpose": "Geometry and standing-pose reference"
+    },
+    {
+      "artifact_id": "CONTROLLERS",
+      "name": "Controllers",
+      "discipline": "software",
+      "path": "controllers",
+      "kind": "directory",
+      "purpose": "Runtime control entry points and hardware/sim connectors"
+    },
+    {
+      "artifact_id": "CORE",
+      "name": "Core Motion Stack",
+      "discipline": "software",
+      "path": "core",
+      "kind": "directory",
+      "purpose": "IK, kinematics, locomotion, and trajectory modules"
+    },
+    {
+      "artifact_id": "ROBOTS",
+      "name": "Robot Configuration",
+      "discipline": "software",
+      "path": "robots",
+      "kind": "directory",
+      "purpose": "Robot model configuration and nominal-pose helpers"
+    },
+    {
+      "artifact_id": "WORLDS",
+      "name": "Simulation Worlds",
+      "discipline": "simulation",
+      "path": "worlds",
+      "kind": "directory",
+      "purpose": "Webots scenarios used for simulation validation"
+    },
+    {
+      "artifact_id": "PROTOS",
+      "name": "Webots Protos",
+      "discipline": "simulation",
+      "path": "protos",
+      "kind": "directory",
+      "purpose": "Robot and world object definitions"
+    },
+    {
+      "artifact_id": "CI_PIPELINE",
+      "name": "CI Pipeline",
+      "discipline": "software",
+      "path": ".github/workflows/ci.yml",
+      "kind": "file",
+      "purpose": "Automation hook for lint, smoke checks, and future tracker refresh"
+    }
+  ],
+  "workstreams": [
+    {
+      "workstream_id": "WS-ARCH",
+      "name": "Architecture and Code Health",
+      "discipline": "software",
+      "anchor_path": "architecture.md",
+      "evidence_anchor": ".archex/metrics.json",
+      "goal": "Keep module boundaries, dependencies, and health visible and current"
+    },
+    {
+      "workstream_id": "WS-IK",
+      "name": "Kinematics and IK",
+      "discipline": "software",
+      "anchor_path": "core",
+      "evidence_anchor": "core/inverse_kinematics.py",
+      "goal": "Maintain correct forward and inverse motion models for each leg"
+    },
+    {
+      "workstream_id": "WS-LOCO",
+      "name": "Locomotion and Trajectories",
+      "discipline": "software",
+      "anchor_path": "core/locomotion",
+      "evidence_anchor": "core/trajectory",
+      "goal": "Generate stable gait scheduling and foot target trajectories"
+    },
+    {
+      "workstream_id": "WS-SIM",
+      "name": "Simulation and Validation",
+      "discipline": "simulation",
+      "anchor_path": "worlds",
+      "evidence_anchor": "controllers",
+      "goal": "Validate controller behavior in repeatable Webots scenarios"
+    },
+    {
+      "workstream_id": "WS-MECH",
+      "name": "Mechanical Geometry and Assembly",
+      "discipline": "mechanical",
+      "anchor_path": "SPIDER_ROBOT_CONFIG.md",
+      "evidence_anchor": "protos",
+      "goal": "Keep robot geometry, assembly, and nominal stance coherent"
+    },
+    {
+      "workstream_id": "WS-ELEC",
+      "name": "Electronics and Wiring",
+      "discipline": "electronics",
+      "anchor_path": "controllers/connectors",
+      "evidence_anchor": "libraries",
+      "goal": "Define the electronics architecture, control interfaces, and wiring behavior"
+    },
+    {
+      "workstream_id": "WS-BRINGUP",
+      "name": "Bring-up and Calibration",
+      "discipline": "integration",
+      "anchor_path": "robots/rconfig.py",
+      "evidence_anchor": "controllers/spider_static_controller",
+      "goal": "Move from motor zero to safe nominal posture and calibrated operation"
+    },
+    {
+      "workstream_id": "WS-SUPPLY",
+      "name": "Procurement and Manufacturing",
+      "discipline": "operations",
+      "anchor_path": "planning/templates/bom.csv",
+      "evidence_anchor": "LTSpice experiments",
+      "goal": "Track what must be built, purchased, and assembled for the next integration step"
+    }
+  ],
+  "milestones": [
+    {
+      "milestone_id": "M0",
+      "sequence": 0,
+      "name": "Architecture Baseline",
+      "focus": "Project structure, workstreams, and technical anchors are defined",
+      "evidence": "architecture.md updated and tracker sheets initialized"
+    },
+    {
+      "milestone_id": "M1",
+      "sequence": 1,
+      "name": "Single-Leg IK Validation",
+      "focus": "FK and IK behavior are validated for a single leg in simulation",
+      "evidence": "single-leg controller behaves repeatably and compile/lint checks pass"
+    },
+    {
+      "milestone_id": "M2",
+      "sequence": 2,
+      "name": "Raise to Nominal",
+      "focus": "Robot can transition safely from motor zero to working posture",
+      "evidence": "nominal pose command path and validation scenario are defined"
+    },
+    {
+      "milestone_id": "M3",
+      "sequence": 3,
+      "name": "Trajectory and Phase Library",
+      "focus": "Path generation and time-law logic are separated and reusable",
+      "evidence": "trajectory and time-law modules are coupled through locomotion"
+    },
+    {
+      "milestone_id": "M4",
+      "sequence": 4,
+      "name": "Simulation Gait Integration",
+      "focus": "Gait generation produces stable leg targets in simulation",
+      "evidence": "world-based validation exists for nominal stance and commanded motion"
+    },
+    {
+      "milestone_id": "M5",
+      "sequence": 5,
+      "name": "Teleop Controller Integration",
+      "focus": "Operator commands can trigger posture changes and locomotion",
+      "evidence": "controller state machine and input mappings are validated"
+    },
+    {
+      "milestone_id": "M6",
+      "sequence": 6,
+      "name": "Hardware Integration",
+      "focus": "Mechanical, electronics, and control stack align on real hardware",
+      "evidence": "bring-up, wiring, and standing behavior are verified"
+    },
+    {
+      "milestone_id": "M7",
+      "sequence": 7,
+      "name": "Full-Robot Walking",
+      "focus": "Integrated walking behavior is demonstrated with evidence",
+      "evidence": "simulation and hardware validation records exist for walking"
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+stream_id,name,focus,status,owner,next_step,blocking_risk,evidence_link,prompt_1,prompt_2,prompt_3
+MAN-MECH,Mechanical,"Geometry, CAD, assembly, tolerances, linkage fit, body packaging",manual,,,,,What is the next physical design decision that blocks software or integration?,What evidence proves this mechanical step is done?,Which repo or external artifact should this row point to?
+MAN-ELEC,Electronics,"Power, motor interfaces, buses, wiring, controller boards, protections",manual,,,,,What interface or power constraint is currently limiting integration?,What bench test or schematic evidence closes this item?,"Which document, diagram, or note should this row reference?"
+MAN-MFG,Manufacturing and Procurement,"Bought parts, fabricated parts, assembly readiness, sourcing risk",manual,,,,,Which part or fabrication step is next on the critical path?,What status tells you it is no longer a blocker?,"What vendor, drawing, or BOM line should be linked here?"

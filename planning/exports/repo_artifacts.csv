@@ -1,0 +1,11 @@
+artifact_id,name,discipline,path,kind,exists,purpose
+ARCHITECTURE,Architecture Reference,software,architecture.md,file,True,ArchEx-generated architecture baseline and module contracts
+ARCH_EX_METRICS,ArchEx Metrics,software,.archex/metrics.json,file,True,Module health metrics for coupling and cohesion
+ARCH_EX_GRAPH,ArchEx Graph,software,.archex/graph.json,file,True,Dependency graph for modules and symbols
+ROBOT_CONFIG,Robot Config Guide,mechanical,SPIDER_ROBOT_CONFIG.md,file,True,Geometry and standing-pose reference
+CONTROLLERS,Controllers,software,controllers,directory,True,Runtime control entry points and hardware/sim connectors
+CORE,Core Motion Stack,software,core,directory,True,"IK, kinematics, locomotion, and trajectory modules"
+ROBOTS,Robot Configuration,software,robots,directory,True,Robot model configuration and nominal-pose helpers
+WORLDS,Simulation Worlds,simulation,worlds,directory,True,Webots scenarios used for simulation validation
+PROTOS,Webots Protos,simulation,protos,directory,True,Robot and world object definitions
+CI_PIPELINE,CI Pipeline,software,.github/workflows/ci.yml,file,True,"Automation hook for lint, smoke checks, and future tracker refresh"

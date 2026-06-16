@@ -1,0 +1,9 @@
+milestone_id,sequence,name,focus,evidence
+M0,0,Architecture Baseline,"Project structure, workstreams, and technical anchors are defined",architecture.md updated and tracker sheets initialized
+M1,1,Single-Leg IK Validation,FK and IK behavior are validated for a single leg in simulation,single-leg controller behaves repeatably and compile/lint checks pass
+M2,2,Raise to Nominal,Robot can transition safely from motor zero to working posture,nominal pose command path and validation scenario are defined
+M3,3,Trajectory and Phase Library,Path generation and time-law logic are separated and reusable,trajectory and time-law modules are coupled through locomotion
+M4,4,Simulation Gait Integration,Gait generation produces stable leg targets in simulation,world-based validation exists for nominal stance and commanded motion
+M5,5,Teleop Controller Integration,Operator commands can trigger posture changes and locomotion,controller state machine and input mappings are validated
+M6,6,Hardware Integration,"Mechanical, electronics, and control stack align on real hardware","bring-up, wiring, and standing behavior are verified"
+M7,7,Full-Robot Walking,Integrated walking behavior is demonstrated with evidence,simulation and hardware validation records exist for walking

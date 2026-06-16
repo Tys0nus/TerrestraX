@@ -55,26 +55,15 @@ class LegIK:
     def step_solve(self, q: JointVec, target: Vec3, params: IKParams) -> Tuple[JointVec, IKinfo]:
         """Perform one bounded IK step towards the target."""
         q = np.asarray(q, np.float64).flatten()
-        target = np.asarray(target, np.float64).flatten()
-
-        dq,_ = self.ik_step(q, target)
+        dq, error = self.ik_step(q, target)
         dq = np.clip(dq, -params.max_dq, params.max_dq)
         q_target = q + params.alpha * dq
-
-        error = target - self.fk_np(q_target)
         err_norm = float(np.linalg.norm(error))
         return q_target, IKinfo(ok=err_norm < params.tol, iters=1, err=err_norm)
     
     def solve(self, q_init: JointVec, target: Vec3, params: IKParams) -> Tuple[JointVec, IKinfo]:
         """Iteratively solve IK until convergence or max iterations."""
         q = np.asarray(q_init, np.float64).flatten()
-        target = np.asarray(target, np.float64).flatten()
-
-        err_norm = float(np.linalg.norm(target - self.fk_np(q)))
-
-        if err_norm < params.tol:
-            return q, IKinfo(ok=True, iters=0, err=err_norm)
-    
         for i in range(params.max_iters):
             q, info = self.step_solve(q, target, params)
             if info.ok:

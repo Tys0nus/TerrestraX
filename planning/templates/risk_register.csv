@@ -1,0 +1,5 @@
+risk_id,title,category,severity,likelihood,status,owner,linked_item_id,trigger,mitigation,next_review,notes
+RISK-001,Architecture baseline becomes stale,software,medium,medium,open,,TTX-001,Code structure changes without ArchEx refresh,Refresh architecture outputs when structure changes,,
+RISK-002,Nominal posture transition causes unsafe transient,controls,high,medium,open,,TTX-003,Raise-to-nominal sequence is commanded without bounded transition,Use controlled interpolation and simulation validation before hardware,,
+RISK-003,Simulation behavior diverges from hardware,systems,high,medium,open,,TTX-004,Trajectory assumptions are only tested in simulation,Define explicit simulation-to-hardware validation gates,,
+RISK-004,Electronics documentation stays fragmented,electronics,medium,high,open,,TTX-006,Wiring and interfaces live in ad hoc notes,Create a single interface inventory and update it with each integration change,,

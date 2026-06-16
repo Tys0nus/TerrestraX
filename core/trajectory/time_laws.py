@@ -12,9 +12,9 @@ import math
 def time_law(t: float, T: float) -> float:
 
     if t<0:
-        return 0.0
+        return 0.0, 0.0, 0.0
     elif t>T:
-        return 1.0
+        return 1.0, 0.0, 0.0
     
     tau = t / T
     s = 3*tau**2 - 2*tau**3

@@ -1,0 +1,13 @@
+metric,value
+generated_at_utc,2026-04-22T08:07:04.598668+00:00
+artifact_count,10
+workstream_count,8
+milestone_count,8
+top_level_directory_count,10
+python_file_count,30
+world_file_count,11
+proto_file_count,2
+architecture_md_present,True
+archex_metrics_present,True
+archex_graph_present,True
+ci_pipeline_present,True
