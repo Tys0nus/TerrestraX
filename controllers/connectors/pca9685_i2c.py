@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Iterable
+from typing import Iterable, Mapping
 
 
 @dataclass(frozen=True)
@@ -73,6 +73,88 @@ class PCA9685ServoBridge:
         for i, angle in enumerate(angles):
             clamped = max(0.0, min(self._actuation_range_deg, angle))
             self._servos[i].angle = clamped
+
+    def close(self) -> None:
+        self._pca.deinit()
+        deinit = getattr(self._i2c, "deinit", None)
+        if callable(deinit):
+            deinit()
+
+
+@dataclass(frozen=True)
+class PCA9685SpiderConfig:
+    i2c_address: int = 0x40
+    i2c_bus: int = 1
+    pwm_hz: float = 50.0
+    leg_channels: Mapping[str, tuple[int, int, int]] | None = None
+    min_pulse_us: int = 500
+    max_pulse_us: int = 2500
+    actuation_range_deg: float = 180.0
+
+
+class PCA9685SpiderBridge:
+    def __init__(self, cfg: PCA9685SpiderConfig):
+        leg_channels = cfg.leg_channels or {
+            "FL": (0, 1, 2),
+            "FR": (3, 4, 5),
+            "RL": (6, 7, 8),
+            "RR": (9, 10, 11),
+        }
+        for leg_id, channels in leg_channels.items():
+            if len(channels) != 3:
+                raise ValueError(f"{leg_id} must have exactly 3 channel indices")
+            for channel in channels:
+                if channel < 0 or channel > 15:
+                    raise ValueError(f"PCA9685 channel out of range for {leg_id}: {channel}")
+
+        try:
+            import board
+            from adafruit_motor import servo
+            from adafruit_pca9685 import PCA9685
+        except ImportError as exc:
+            raise RuntimeError(
+                "PCA9685 backend requires Adafruit CircuitPython stack. Install with: "
+                "pip install adafruit-blinka adafruit-circuitpython-pca9685 adafruit-circuitpython-motor"
+            ) from exc
+
+        if cfg.i2c_bus == 1:
+            i2c = board.I2C()
+        else:
+            try:
+                from adafruit_extended_bus import ExtendedI2C
+            except ImportError as exc:
+                raise RuntimeError(
+                    "Non-default i2c_bus requires adafruit-extended-bus. Install with: "
+                    "pip install adafruit-extended-bus"
+                ) from exc
+            i2c = ExtendedI2C(cfg.i2c_bus)
+
+        self._i2c = i2c
+        self._pca = PCA9685(i2c, address=int(cfg.i2c_address))
+        self._pca.frequency = int(cfg.pwm_hz)
+        self._actuation_range_deg = float(cfg.actuation_range_deg)
+        self._servos = {
+            leg_id: [
+                servo.Servo(
+                    self._pca.channels[channel],
+                    min_pulse=int(cfg.min_pulse_us),
+                    max_pulse=int(cfg.max_pulse_us),
+                    actuation_range=self._actuation_range_deg,
+                )
+                for channel in channels
+            ]
+            for leg_id, channels in leg_channels.items()
+        }
+
+    def send_joint_degrees(self, leg_id: str, angles_deg: Iterable[float]) -> None:
+        angles = [float(angle) for angle in angles_deg]
+        if len(angles) != 3:
+            raise ValueError("angles_deg must contain exactly 3 values")
+        if leg_id not in self._servos:
+            raise KeyError(f"Unknown leg id: {leg_id}")
+
+        for servo_obj, angle in zip(self._servos[leg_id], angles):
+            servo_obj.angle = max(0.0, min(self._actuation_range_deg, angle))
 
     def close(self) -> None:
         self._pca.deinit()
