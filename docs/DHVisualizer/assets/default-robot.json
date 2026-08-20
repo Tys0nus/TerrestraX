@@ -1,0 +1,663 @@
+{
+  "id": "quadruped_spider",
+  "name": "Spider Robot (Quadruped)",
+  "convention": "standard",
+  "description": "Quadruped robot with 4 legs, each with 3 DOF",
+  "chains": [
+    {
+      "id": "FL",
+      "name": "Front Left Leg",
+      "baseTransform": [
+        [
+          1,
+          0,
+          0,
+          0.06
+        ],
+        [
+          0,
+          1,
+          0,
+          0.06
+        ],
+        [
+          0,
+          0,
+          1,
+          0.07
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "joints": [
+        {
+          "a": 0.08485281374,
+          "alpha": 0,
+          "d": 0,
+          "theta": 0.7853981633974483,
+          "visible": true,
+          "isPrismatic": false,
+          "virtual": true
+        },
+        {
+          "a": 0,
+          "alpha": 0,
+          "d": 0,
+          "theta": 0,
+          "visible": true,
+          "isPrismatic": false,
+          "virtual": false
+        },
+        {
+          "a": 0.04,
+          "alpha": 1.5707963267948966,
+          "d": 0,
+          "theta": 0,
+          "visible": true,
+          "isPrismatic": false,
+          "virtual": true
+        },
+        {
+          "theta": 0,
+          "d": 0,
+          "a": 0,
+          "alpha": 0,
+          "visible": true,
+          "virtual": false,
+          "joint_type": "revolute",
+          "limits": {
+            "lower": -3.14,
+            "upper": 3.14,
+            "effort": 100,
+            "velocity": 1
+          }
+        },
+        {
+          "theta": 0,
+          "d": 0,
+          "a": 0.035,
+          "alpha": 0,
+          "visible": false,
+          "virtual": true,
+          "joint_type": "revolute",
+          "limits": {
+            "lower": -3.14,
+            "upper": 3.14,
+            "effort": 100,
+            "velocity": 1
+          }
+        },
+        {
+          "theta": -1.5707963267948966,
+          "d": 0,
+          "a": 0,
+          "alpha": 0,
+          "visible": false,
+          "virtual": true,
+          "joint_type": "revolute",
+          "limits": {
+            "lower": -3.14,
+            "upper": 3.14,
+            "effort": 100,
+            "velocity": 1
+          }
+        },
+        {
+          "theta": 0,
+          "d": 0,
+          "a": 0,
+          "alpha": 0,
+          "visible": true,
+          "virtual": false,
+          "joint_type": "revolute",
+          "limits": {
+            "lower": -3.14,
+            "upper": 3.14,
+            "effort": 100,
+            "velocity": 1
+          }
+        },
+        {
+          "theta": 0,
+          "d": 0,
+          "a": 0.07,
+          "alpha": 0,
+          "visible": false,
+          "virtual": true,
+          "joint_type": "revolute",
+          "limits": {
+            "lower": -3.14,
+            "upper": 3.14,
+            "effort": 100,
+            "velocity": 1
+          }
+        },
+        {
+          "theta": 1.5707963267948966,
+          "d": 0,
+          "a": 0,
+          "alpha": -1.5707963267948966,
+          "visible": false,
+          "virtual": true,
+          "joint_type": "revolute",
+          "limits": {
+            "lower": -3.14,
+            "upper": 3.14,
+            "effort": 100,
+            "velocity": 1
+          }
+        },
+        {
+          "theta": -0.7853981633974483,
+          "d": 0,
+          "a": 0,
+          "alpha": 0,
+          "visible": true,
+          "virtual": true,
+          "joint_type": "fixed",
+          "limits": {
+            "lower": -3.14,
+            "upper": 3.14,
+            "effort": 100,
+            "velocity": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "FR",
+      "name": "Front Right Leg",
+      "baseTransform": [
+        [
+          1,
+          0,
+          0,
+          0.06
+        ],
+        [
+          0,
+          1,
+          0,
+          -0.06
+        ],
+        [
+          0,
+          0,
+          1,
+          0.07
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "joints": [
+        {
+          "a": 0.0849,
+          "alpha": 0,
+          "d": 0,
+          "theta": -0.7853981633974483,
+          "visible": true,
+          "isPrismatic": false,
+          "virtual": true
+        },
+        {
+          "a": 0,
+          "alpha": 0,
+          "d": 0,
+          "theta": 0,
+          "visible": true,
+          "isPrismatic": false
+        },
+        {
+          "a": 0.04,
+          "alpha": 1.5707963267948966,
+          "d": 0,
+          "theta": 0,
+          "visible": true,
+          "isPrismatic": false,
+          "virtual": true
+        },
+        {
+          "theta": 0,
+          "d": 0,
+          "a": 0,
+          "alpha": 0,
+          "visible": true,
+          "virtual": false,
+          "joint_type": "revolute",
+          "limits": {
+            "lower": -3.14,
+            "upper": 3.14,
+            "effort": 100,
+            "velocity": 1
+          }
+        },
+        {
+          "theta": 0,
+          "d": 0,
+          "a": 0.035,
+          "alpha": 0,
+          "visible": false,
+          "virtual": true,
+          "joint_type": "revolute",
+          "limits": {
+            "lower": -3.14,
+            "upper": 3.14,
+            "effort": 100,
+            "velocity": 1
+          }
+        },
+        {
+          "theta": -1.5707963267948966,
+          "d": 0,
+          "a": 0,
+          "alpha": 0,
+          "visible": false,
+          "virtual": true,
+          "joint_type": "revolute",
+          "limits": {
+            "lower": -3.14,
+            "upper": 3.14,
+            "effort": 100,
+            "velocity": 1
+          }
+        },
+        {
+          "theta": 0,
+          "d": 0,
+          "a": 0,
+          "alpha": 0,
+          "visible": true,
+          "virtual": false,
+          "joint_type": "revolute",
+          "limits": {
+            "lower": -3.14,
+            "upper": 3.14,
+            "effort": 100,
+            "velocity": 1
+          }
+        },
+        {
+          "theta": 0,
+          "d": 0,
+          "a": 0.07,
+          "alpha": 0,
+          "visible": false,
+          "virtual": true,
+          "joint_type": "revolute",
+          "limits": {
+            "lower": -3.14,
+            "upper": 3.14,
+            "effort": 100,
+            "velocity": 1
+          }
+        },
+        {
+          "theta": 1.5707963267948966,
+          "d": 0,
+          "a": 0,
+          "alpha": -1.5707963267948966,
+          "visible": false,
+          "virtual": true,
+          "joint_type": "revolute",
+          "limits": {
+            "lower": -3.14,
+            "upper": 3.14,
+            "effort": 100,
+            "velocity": 1
+          }
+        },
+        {
+          "theta": 0.7853981633974483,
+          "d": 0,
+          "a": 0,
+          "alpha": 0,
+          "visible": true,
+          "virtual": true,
+          "joint_type": "revolute",
+          "limits": {
+            "lower": -3.14,
+            "upper": 3.14,
+            "effort": 100,
+            "velocity": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "RL",
+      "name": "Rear Left Leg",
+      "baseTransform": [
+        [
+          1,
+          0,
+          0,
+          -0.06
+        ],
+        [
+          0,
+          1,
+          0,
+          0.06
+        ],
+        [
+          0,
+          0,
+          1,
+          0.07
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "joints": [
+        {
+          "a": 0.0849,
+          "alpha": 0,
+          "d": 0,
+          "theta": 2.356194490192345,
+          "visible": true,
+          "isPrismatic": false,
+          "virtual": true
+        },
+        {
+          "a": 0.035,
+          "alpha": 0,
+          "d": 0,
+          "theta": 0,
+          "visible": true,
+          "isPrismatic": false
+        },
+        {
+          "a": 0.04,
+          "alpha": 1.5707963267948966,
+          "d": 0,
+          "theta": 0,
+          "visible": true,
+          "isPrismatic": false,
+          "virtual": true
+        },
+        {
+          "theta": 0,
+          "d": 0,
+          "a": 0,
+          "alpha": 0,
+          "visible": true,
+          "virtual": false,
+          "joint_type": "revolute",
+          "limits": {
+            "lower": -3.14,
+            "upper": 3.14,
+            "effort": 100,
+            "velocity": 1
+          }
+        },
+        {
+          "theta": 0,
+          "d": 0,
+          "a": 0.035,
+          "alpha": 0,
+          "visible": false,
+          "virtual": true,
+          "joint_type": "revolute",
+          "limits": {
+            "lower": -3.14,
+            "upper": 3.14,
+            "effort": 100,
+            "velocity": 1
+          }
+        },
+        {
+          "theta": -1.5707963267948966,
+          "d": 0,
+          "a": 0,
+          "alpha": 0,
+          "visible": false,
+          "virtual": true,
+          "joint_type": "revolute",
+          "limits": {
+            "lower": -3.14,
+            "upper": 3.14,
+            "effort": 100,
+            "velocity": 1
+          }
+        },
+        {
+          "theta": 0,
+          "d": 0,
+          "a": 0,
+          "alpha": 0,
+          "visible": true,
+          "virtual": false,
+          "joint_type": "revolute",
+          "limits": {
+            "lower": -3.14,
+            "upper": 3.14,
+            "effort": 100,
+            "velocity": 1
+          }
+        },
+        {
+          "theta": 0,
+          "d": 0,
+          "a": 0.07,
+          "alpha": 0,
+          "visible": false,
+          "virtual": true,
+          "joint_type": "revolute",
+          "limits": {
+            "lower": -3.14,
+            "upper": 3.14,
+            "effort": 100,
+            "velocity": 1
+          }
+        },
+        {
+          "theta": 1.5707963267948966,
+          "d": 0,
+          "a": 0,
+          "alpha": -1.5707963267948966,
+          "visible": false,
+          "virtual": true,
+          "joint_type": "revolute",
+          "limits": {
+            "lower": -3.14,
+            "upper": 3.14,
+            "effort": 100,
+            "velocity": 1
+          }
+        },
+        {
+          "theta": -2.356194490192345,
+          "d": 0,
+          "a": 0,
+          "alpha": 0,
+          "visible": true,
+          "virtual": true,
+          "joint_type": "revolute",
+          "limits": {
+            "lower": -3.14,
+            "upper": 3.14,
+            "effort": 100,
+            "velocity": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "RR",
+      "name": "Rear Right Leg",
+      "baseTransform": [
+        [
+          1,
+          0,
+          0,
+          -0.06
+        ],
+        [
+          0,
+          1,
+          0,
+          -0.06
+        ],
+        [
+          0,
+          0,
+          1,
+          0.07
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "joints": [
+        {
+          "a": 0.0849,
+          "alpha": 0,
+          "d": 0,
+          "theta": -2.356194490192345,
+          "visible": true,
+          "isPrismatic": false,
+          "virtual": true
+        },
+        {
+          "a": 0.035,
+          "alpha": 0,
+          "d": 0,
+          "theta": 0,
+          "visible": true,
+          "isPrismatic": false
+        },
+        {
+          "a": 0.04,
+          "alpha": 1.5707963267948966,
+          "d": 0,
+          "theta": 0,
+          "visible": true,
+          "isPrismatic": false,
+          "virtual": true
+        },
+        {
+          "theta": 0,
+          "d": 0,
+          "a": 0.05,
+          "alpha": 0,
+          "visible": true,
+          "virtual": false,
+          "joint_type": "revolute",
+          "limits": {
+            "lower": -3.14,
+            "upper": 3.14,
+            "effort": 100,
+            "velocity": 1
+          }
+        },
+        {
+          "theta": 0,
+          "d": 0,
+          "a": 0.035,
+          "alpha": 0,
+          "visible": false,
+          "virtual": true,
+          "joint_type": "revolute",
+          "limits": {
+            "lower": -3.14,
+            "upper": 3.14,
+            "effort": 100,
+            "velocity": 1
+          }
+        },
+        {
+          "theta": -1.5707963267948966,
+          "d": 0,
+          "a": 0,
+          "alpha": 0,
+          "visible": false,
+          "virtual": true,
+          "joint_type": "revolute",
+          "limits": {
+            "lower": -3.14,
+            "upper": 3.14,
+            "effort": 100,
+            "velocity": 1
+          }
+        },
+        {
+          "theta": 0,
+          "d": 0,
+          "a": 0,
+          "alpha": 0,
+          "visible": true,
+          "virtual": false,
+          "joint_type": "revolute",
+          "limits": {
+            "lower": -3.14,
+            "upper": 3.14,
+            "effort": 100,
+            "velocity": 1
+          }
+        },
+        {
+          "theta": 0,
+          "d": 0,
+          "a": 0.07,
+          "alpha": 0,
+          "visible": false,
+          "virtual": true,
+          "joint_type": "revolute",
+          "limits": {
+            "lower": -3.14,
+            "upper": 3.14,
+            "effort": 100,
+            "velocity": 1
+          }
+        },
+        {
+          "theta": 1.5707963267948966,
+          "d": 0,
+          "a": 0,
+          "alpha": -1.5707963267948966,
+          "visible": false,
+          "virtual": true,
+          "joint_type": "revolute",
+          "limits": {
+            "lower": -3.14,
+            "upper": 3.14,
+            "effort": 100,
+            "velocity": 1
+          }
+        },
+        {
+          "theta": 2.356194490192345,
+          "d": 0,
+          "a": 0,
+          "alpha": 0,
+          "visible": true,
+          "virtual": true,
+          "joint_type": "revolute",
+          "limits": {
+            "lower": -3.14,
+            "upper": 3.14,
+            "effort": 100,
+            "velocity": 1
+          }
+        }
+      ]
+    }
+  ],
+  "isCustom": true,
+  "exportDate": "2026-04-05T18:03:50.654Z"
+}
